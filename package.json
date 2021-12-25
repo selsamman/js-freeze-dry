@@ -1,7 +1,7 @@
 {
   "name": "js-freeze-dry",
   "version": "1.0.0",
-  "description": "Serialize sub-project of Proxily and ts-crep",
+  "description": "Round trip conversion of complex cyclic object graphs to strings with support for classes, maps and sets",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
   "types": "./lib/esm/index.d.ts",
@@ -26,6 +26,6 @@
     "build:esm": "tsc",
     "build:cjs": "tsc --module commonjs --outDir lib/cjs",
     "test": "jest",
-    "publish": "yarn build && npm publish --tag alpha"
+    "publish": "yarn build && npm publish"
   }
 }
