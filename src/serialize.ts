@@ -60,7 +60,7 @@ export function serialize(rootObj : any, classes? : Classes) {
         if (!handler)
             className = classMap.get(value.constructor);
         if (!className)
-            throw new Error(`serialize called with class (${value}) not found in class map`)
+            throw new Error(`serialize called with class (${value.constructor.name}) not found in class map`)
         const objId = id++;
         objToId.set(value, {c: className, i: objId});
         lastObj = {
