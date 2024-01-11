@@ -155,7 +155,12 @@ describe("serialization tests", () => {
     it("Can serialize POJOs", () => {
         const c = {
             str: "1",
-            num:1
+            num:1,
+            foo: {},
+            bar: {
+                bar1: 33,
+                bar2: [2,3]
+            }
         }
 
         const json = serialize(c);
@@ -164,6 +169,34 @@ describe("serialization tests", () => {
         expect(newC.num).toBe(1);
         expect(typeof newC.str).toBe("string");
         expect(typeof newC.num).toBe("number");
+        expect(typeof newC.foo).toBe("object");
+        expect(newC.bar.bar1).toBe(33)
+        expect(newC.bar.bar2[0]).toBe(2);
+        expect(newC.bar.bar2[1]).toBe(3);
+    });
+
+    it("Can serialize POJOs in class", () => {
+        class POJOClass  {
+            str = "1";
+            num = 1;
+            foo : any = {};
+            bar = {
+                bar1: 33,
+                bar2: [2,3]
+            };
+        }
+        const c = new POJOClass();
+
+        const json = serialize(c, {POJOClass});
+        const newC = deserialize(json, {POJOClass});
+        expect(newC.str).toBe("1");
+        expect(newC.num).toBe(1);
+        expect(typeof newC.str).toBe("string");
+        expect(typeof newC.num).toBe("number");
+        expect(typeof newC.foo).toBe("object");
+        expect(newC.bar.bar1).toBe(33)
+        expect(newC.bar.bar2[0]).toBe(2);
+        expect(newC.bar.bar2[1]).toBe(3);
     });
 
     it("Can serialize mixed arrays", () => {

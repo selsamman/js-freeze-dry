@@ -1,2 +1,2 @@
-export {deserialize} from "./deserialize";
-export {serialize} from "./serialize";
+export { deserialize, deserializer } from "./deserialize";
+export { serialize, serializer, serializable } from "./serialize";
