@@ -175,6 +175,42 @@ describe("serialization tests", () => {
         expect(newC.bar.bar2[1]).toBe(3);
     });
 
+    it( "Can handle new elements in a class", () => {
+
+        class SubState {
+            sub = 23;
+        }
+        class State {
+            version = 100;
+            subState? = new SubState();
+        }
+        const state = new State();
+        delete state['subState'];
+        const json = serialize(state, {State});
+        const newS = deserialize(json, {State, SubState}) as State;
+        expect(newS.subState instanceof SubState).toBe(true)
+
+    });
+
+    it( "Can handle to pointers to the same object", () => {
+        class SubState {
+            sub = 23;
+        }
+        class State {
+            version = 100;
+            subState : SubState | undefined;
+        }
+        const s1 = new State();
+        const s2 = new State();
+        const ss = new SubState();
+        s1.subState = ss;
+        s2.subState = ss;
+        const json = serialize({s1, s2}, {State, SubState});
+        const newS = deserialize(json, {State, SubState}) as {s1: State, s2: State};
+        expect(newS.s1.subState === newS.s2.subState).toBe(true);
+
+    });
+
     it("Can serialize POJOs in class", () => {
         class POJOClass  {
             str = "1";

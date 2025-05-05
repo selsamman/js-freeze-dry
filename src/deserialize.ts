@@ -64,13 +64,13 @@ export function deserialize(json : string,
                     if (newHelper) {
                         const newObj2 = newHelper(obj.v, type);
                         objects.set(obj.i, newObj2);
-                        return processObject(newObj2);
+                        return processObject(newObj2, obj.v);
                     }
                     else if (newClass) {
                         const newObj1 = new newClass();
                         Object.assign(newObj1, obj.v);
                         objects.set(obj.i, newObj1);
-                        return processObject(newObj1);
+                        return processObject(newObj1, obj.v);
                     }
                     else
                         throw new Error(`Cannot deserialize  ${obj.c}. Did you call serializable({${obj.c}})?`);
@@ -85,9 +85,10 @@ export function deserialize(json : string,
         }
     }
     // Process non-primitive subordinate objects distinguishing arrays
-    function processObject(obj : any) {
+    function processObject(obj : any, markerData? : any) {
         for (const prop in obj)
-            obj[prop] = processObjectProp(obj[prop]);
+            if (!markerData || markerData[prop])
+                obj[prop] = processObjectProp(obj[prop]);
         return obj;
     }
     // Process a subordinate object property distinguishing arrays

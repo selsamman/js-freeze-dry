@@ -1,6 +1,6 @@
 {
   "name": "js-freeze-dry",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Round trip conversion of complex cyclic object graphs to strings with support for classes, maps and sets",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
